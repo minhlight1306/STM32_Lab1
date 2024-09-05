@@ -91,7 +91,7 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  int led_status = 1 ;
+  int led_status = 0 ;
   while (1)
    {
   	 if(led_status == 1){
