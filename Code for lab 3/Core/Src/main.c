@@ -22,7 +22,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "ex4.c"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -93,7 +93,7 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   int count = 1;
   int count5s = 1;
-
+  int segstatus = 0;
   while (1)
   {
 	  //led red trai va phai on
@@ -170,6 +170,78 @@ int main(void)
 		  count5s = 1;
 	  }
 
+	  switch(segstatus){
+	  case 0:
+		  HAL_GPIO_WritePin(Seg6_GPIO_Port, Seg6_Pin, 0);
+		  segstatus++;
+		  break;
+
+	  case 1:
+		  HAL_GPIO_WritePin(Seg1_GPIO_Port, Seg1_Pin, 0);
+		  HAL_GPIO_WritePin(Seg2_GPIO_Port, Seg2_Pin, 0);
+		  segstatus++;
+		  break;
+	  case 2:
+		  HAL_GPIO_WritePin(Seg0_GPIO_Port, Seg0_Pin, 0);
+		  HAL_GPIO_WritePin(Seg1_GPIO_Port, Seg1_Pin, 0);
+		  HAL_GPIO_WritePin(Seg3_GPIO_Port, Seg3_Pin, 0);
+		  HAL_GPIO_WritePin(Seg4_GPIO_Port, Seg4_Pin, 0);
+		  HAL_GPIO_WritePin(Seg6_GPIO_Port, Seg6_Pin, 0);
+		  segstatus++;
+		  break;
+	  case 3:
+		  HAL_GPIO_WritePin(Seg0_GPIO_Port, Seg0_Pin, 0);
+		  HAL_GPIO_WritePin(Seg1_GPIO_Port, Seg1_Pin, 0);
+		  HAL_GPIO_WritePin(Seg2_GPIO_Port, Seg2_Pin, 0);
+		  HAL_GPIO_WritePin(Seg3_GPIO_Port, Seg3_Pin, 0);
+		  HAL_GPIO_WritePin(Seg6_GPIO_Port, Seg6_Pin, 0);
+		  segstatus++;
+		  break;
+	  case 4:
+		  HAL_GPIO_WritePin(Seg1_GPIO_Port, Seg1_Pin, 0);
+		  HAL_GPIO_WritePin(Seg2_GPIO_Port, Seg2_Pin, 0);
+		  HAL_GPIO_WritePin(Seg5_GPIO_Port, Seg6_Pin, 0);
+		  HAL_GPIO_WritePin(Seg6_GPIO_Port, Seg6_Pin, 0);
+		  segstatus++;
+		  break;
+	  case 5:
+		  HAL_GPIO_WritePin(Seg0_GPIO_Port, Seg0_Pin, 0);
+		  HAL_GPIO_WritePin(Seg2_GPIO_Port, Seg2_Pin, 0);
+		  HAL_GPIO_WritePin(Seg3_GPIO_Port, Seg3_Pin, 0);
+		  HAL_GPIO_WritePin(Seg5_GPIO_Port, Seg5_Pin, 0);
+		  HAL_GPIO_WritePin(Seg6_GPIO_Port, Seg6_Pin, 0);
+		  segstatus++;
+		  break;
+	  case 6:
+		  HAL_GPIO_WritePin(Seg0_GPIO_Port, Seg0_Pin, 0);
+		  HAL_GPIO_WritePin(Seg2_GPIO_Port, Seg2_Pin, 0);
+		  HAL_GPIO_WritePin(Seg3_GPIO_Port, Seg3_Pin, 0);
+		  HAL_GPIO_WritePin(Seg4_GPIO_Port, Seg4_Pin, 0);
+		  HAL_GPIO_WritePin(Seg5_GPIO_Port, Seg5_Pin, 0);
+		  HAL_GPIO_WritePin(Seg6_GPIO_Port, Seg6_Pin, 0);
+		  segstatus++;
+		  break;
+	  case 7:
+		  HAL_GPIO_WritePin(Seg0_GPIO_Port, Seg0_Pin, 0);
+		  HAL_GPIO_WritePin(Seg1_GPIO_Port, Seg1_Pin, 0);
+		  HAL_GPIO_WritePin(Seg2_GPIO_Port, Seg2_Pin, 0);
+		  segstatus++;
+		  break;
+	  case 8:
+		  segstatus++;
+		  break;
+	  case 9:
+		  HAL_GPIO_WritePin(Seg0_GPIO_Port, Seg0_Pin, 0);
+		  HAL_GPIO_WritePin(Seg1_GPIO_Port, Seg1_Pin, 0);
+		  HAL_GPIO_WritePin(Seg2_GPIO_Port, Seg2_Pin, 0);
+		  HAL_GPIO_WritePin(Seg3_GPIO_Port, Seg3_Pin, 0);
+		  HAL_GPIO_WritePin(Seg5_GPIO_Port, Seg5_Pin, 0);
+		  HAL_GPIO_WritePin(Seg6_GPIO_Port, Seg6_Pin, 0);
+		  segstatus = 0;
+		  break;
+	  default:
+		  break;
+	  }
 	  HAL_Delay(1000);
     /* USER CODE END WHILE */
 
@@ -227,19 +299,22 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOB_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(Led0_GPIO_Port, Led0_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOA, Led0_Pin|Seg0_Pin|Seg1_Pin|Seg2_Pin
+                          |Seg3_Pin|Seg4_Pin|Seg5_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOB, Led1_Pin|Led2_Pin|Led3_Pin|Led11_Pin
                           |Led12_Pin|Led4_Pin|Led5_Pin|Led6_Pin
                           |Led7_Pin|Led8_Pin|Led9_Pin|Led10_Pin, GPIO_PIN_RESET);
 
-  /*Configure GPIO pin : Led0_Pin */
-  GPIO_InitStruct.Pin = Led0_Pin;
+  /*Configure GPIO pins : Led0_Pin Seg0_Pin Seg1_Pin Seg2_Pin
+                           Seg3_Pin Seg4_Pin Seg5_Pin */
+  GPIO_InitStruct.Pin = Led0_Pin|Seg0_Pin|Seg1_Pin|Seg2_Pin
+                          |Seg3_Pin|Seg4_Pin|Seg5_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(Led0_GPIO_Port, &GPIO_InitStruct);
+  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
   /*Configure GPIO pins : Led1_Pin Led2_Pin Led3_Pin Led11_Pin
                            Led12_Pin Led4_Pin Led5_Pin Led6_Pin
