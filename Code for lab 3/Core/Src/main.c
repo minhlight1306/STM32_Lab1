@@ -91,8 +91,86 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+  int count = 1;
+  int count5s = 1;
+
   while (1)
   {
+	  //led red trai va phai on
+	  if(count <= 5){
+		  HAL_GPIO_WritePin(Led2_GPIO_Port, Led2_Pin, 1);//red
+		  HAL_GPIO_WritePin(Led3_GPIO_Port, Led3_Pin, 0);//green
+		  HAL_GPIO_WritePin(Led4_GPIO_Port, Led4_Pin, 0);//yellow
+
+		  HAL_GPIO_WritePin(Led8_GPIO_Port, Led8_Pin, 1);
+		  HAL_GPIO_WritePin(Led9_GPIO_Port, Led9_Pin, 0);
+		  HAL_GPIO_WritePin(Led10_GPIO_Port, Led10_Pin, 0);
+		  //led green tren va duoi on
+		  if(count5s <= 3){
+		  HAL_GPIO_WritePin(Led5_GPIO_Port, Led5_Pin, 0);
+		  HAL_GPIO_WritePin(Led6_GPIO_Port, Led6_Pin, 1);
+		  HAL_GPIO_WritePin(Led7_GPIO_Port, Led7_Pin, 0);
+		  HAL_GPIO_WritePin(Led11_GPIO_Port, Led11_Pin, 0);
+		  HAL_GPIO_WritePin(Led12_GPIO_Port, Led12_Pin, 1);
+		  HAL_GPIO_WritePin(Led1_GPIO_Port, Led1_Pin, 0);
+		  count5s++;
+		  }
+		  //led yellow tren va duoi on
+		  else{
+		  HAL_GPIO_WritePin(Led5_GPIO_Port, Led5_Pin, 0);
+		  HAL_GPIO_WritePin(Led6_GPIO_Port, Led6_Pin, 0);
+		  HAL_GPIO_WritePin(Led7_GPIO_Port, Led7_Pin, 1);
+		  HAL_GPIO_WritePin(Led11_GPIO_Port, Led11_Pin, 0);
+		  HAL_GPIO_WritePin(Led12_GPIO_Port, Led12_Pin, 0);
+		  HAL_GPIO_WritePin(Led1_GPIO_Port, Led1_Pin, 1);
+		  count5s++;
+		  }
+		  count++;
+	  }
+	  //led green tren va duoi on
+	  else if(count <= 8){
+		  HAL_GPIO_WritePin(Led2_GPIO_Port, Led2_Pin, 0);
+		  HAL_GPIO_WritePin(Led3_GPIO_Port, Led3_Pin, 1);
+		  HAL_GPIO_WritePin(Led4_GPIO_Port, Led4_Pin, 0);
+
+		  HAL_GPIO_WritePin(Led5_GPIO_Port, Led5_Pin, 1);
+		  HAL_GPIO_WritePin(Led6_GPIO_Port, Led6_Pin, 0);
+		  HAL_GPIO_WritePin(Led7_GPIO_Port, Led7_Pin, 0);
+
+		  HAL_GPIO_WritePin(Led8_GPIO_Port, Led8_Pin, 0);
+		  HAL_GPIO_WritePin(Led9_GPIO_Port, Led9_Pin, 1);
+		  HAL_GPIO_WritePin(Led10_GPIO_Port, Led10_Pin, 0);
+
+		  HAL_GPIO_WritePin(Led11_GPIO_Port, Led11_Pin, 1);
+		  HAL_GPIO_WritePin(Led12_GPIO_Port, Led12_Pin, 0);
+		  HAL_GPIO_WritePin(Led1_GPIO_Port, Led1_Pin, 0);
+		  count++;
+	  }
+	  //led yellow tren va duoi on
+	  else if(count <= 9){
+		  HAL_GPIO_WritePin(Led2_GPIO_Port, Led2_Pin, 0);
+		  HAL_GPIO_WritePin(Led3_GPIO_Port, Led3_Pin, 0);
+		  HAL_GPIO_WritePin(Led4_GPIO_Port, Led4_Pin, 1);
+
+		  HAL_GPIO_WritePin(Led5_GPIO_Port, Led5_Pin, 1);
+		  HAL_GPIO_WritePin(Led6_GPIO_Port, Led6_Pin, 0);
+		  HAL_GPIO_WritePin(Led7_GPIO_Port, Led7_Pin, 0);
+
+		  HAL_GPIO_WritePin(Led8_GPIO_Port, Led8_Pin, 0);
+		  HAL_GPIO_WritePin(Led9_GPIO_Port, Led9_Pin, 0);
+		  HAL_GPIO_WritePin(Led10_GPIO_Port, Led10_Pin, 1);
+
+		  HAL_GPIO_WritePin(Led11_GPIO_Port, Led11_Pin, 1);
+		  HAL_GPIO_WritePin(Led12_GPIO_Port, Led12_Pin, 0);
+		  HAL_GPIO_WritePin(Led1_GPIO_Port, Led1_Pin, 0);
+		  count++;
+	  }
+	  else{
+		  count = 1;
+		  count5s = 1;
+	  }
+
+	  HAL_Delay(1000);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -145,13 +223,23 @@ static void MX_GPIO_Init(void)
   GPIO_InitTypeDef GPIO_InitStruct = {0};
 
   /* GPIO Ports Clock Enable */
-  __HAL_RCC_GPIOB_CLK_ENABLE();
   __HAL_RCC_GPIOA_CLK_ENABLE();
+  __HAL_RCC_GPIOB_CLK_ENABLE();
+
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(Led0_GPIO_Port, Led0_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOB, Led1_Pin|Led2_Pin|Led3_Pin|Led11_Pin
                           |Led12_Pin|Led4_Pin|Led5_Pin|Led6_Pin
                           |Led7_Pin|Led8_Pin|Led9_Pin|Led10_Pin, GPIO_PIN_RESET);
+
+  /*Configure GPIO pin : Led0_Pin */
+  GPIO_InitStruct.Pin = Led0_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(Led0_GPIO_Port, &GPIO_InitStruct);
 
   /*Configure GPIO pins : Led1_Pin Led2_Pin Led3_Pin Led11_Pin
                            Led12_Pin Led4_Pin Led5_Pin Led6_Pin
