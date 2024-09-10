@@ -115,7 +115,7 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   uint8_t count = 1;
   uint8_t count5s = 1;
-  uint8_t segstatus = 0;
+  uint8_t counter = 0;
   while (1)
   {
 	  //led red trai va phai on
@@ -191,9 +191,8 @@ int main(void)
 		  count = 1;
 		  count5s = 1;
 	  }
-
-	  displayDigit(segstatus);
-	  segstatus = (segstatus + 1) % 10;
+	  if(counter >= 10) counter = 0;
+	  displayDigit(counter++);
 
 	  HAL_Delay(1000);
     /* USER CODE END WHILE */
