@@ -115,11 +115,12 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   uint8_t count = 1;
   uint8_t count5s = 1;
-  uint8_t counter = 0;
+  //uint8_t counter = 0;
   while (1)
   {
 	  //led red trai va phai on
 	  if(count <= 5){
+		  displayDigit(5-count);
 		  HAL_GPIO_WritePin(Led2_GPIO_Port, Led2_Pin, 1);//red
 		  HAL_GPIO_WritePin(Led3_GPIO_Port, Led3_Pin, 0);//green
 		  HAL_GPIO_WritePin(Led4_GPIO_Port, Led4_Pin, 0);//yellow
@@ -151,6 +152,7 @@ int main(void)
 	  }
 	  //led green tren va duoi on
 	  else if(count <= 8){
+		  displayDigit(8-count);
 		  HAL_GPIO_WritePin(Led2_GPIO_Port, Led2_Pin, 0);
 		  HAL_GPIO_WritePin(Led3_GPIO_Port, Led3_Pin, 1);
 		  HAL_GPIO_WritePin(Led4_GPIO_Port, Led4_Pin, 0);
@@ -170,6 +172,7 @@ int main(void)
 	  }
 	  //led yellow tren va duoi on
 	  else if(count <= 9){
+		  displayDigit(10-count);
 		  HAL_GPIO_WritePin(Led2_GPIO_Port, Led2_Pin, 0);
 		  HAL_GPIO_WritePin(Led3_GPIO_Port, Led3_Pin, 0);
 		  HAL_GPIO_WritePin(Led4_GPIO_Port, Led4_Pin, 1);
@@ -188,11 +191,12 @@ int main(void)
 		  count++;
 	  }
 	  else{
+		  displayDigit(0);
 		  count = 1;
 		  count5s = 1;
 	  }
-	  if(counter >= 10) counter = 0;
-	  displayDigit(counter++);
+	  //if(counter >= 10) counter = 0;
+	  //displayDigit(counter++);
 
 	  HAL_Delay(1000);
     /* USER CODE END WHILE */
