@@ -193,32 +193,19 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  //int count = 1;
-  int hour = 0;
-  int min = 0;
-  int sec = 0;
+  int count = 0;
+
   clearAllClock();
   while (1)
   {
-	  clearNumberOnClock(sec);
-	  clearNumberOnClock(min);
-	  clearNumberOnClock(hour);
-	  sec++;
-	  if(sec >= 60){
-		  sec = 0;
-		  min++;
+	  clearAllClock();
+	  count++;
+	  if(count >= 12){
+		  count = 0;
+		  count = 0;
 	  }
-	  if(min >= 60){
-		  min = 0;
-		  hour++;
-	  }
-	  if(hour >= 12){
-		  hour = 0;
-		  //clearAllClock();
-	  }
-	  setNumberOnClock(sec);
-	  setNumberOnClock(min);
-	  setNumberOnClock(hour);
+
+	  setNumberOnClock(count);
 
 	  HAL_Delay(1000);
     /* USER CODE END WHILE */
