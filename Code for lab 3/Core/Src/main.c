@@ -204,11 +204,11 @@ int main(void)
 	  clearNumberOnClock(min);
 	  clearNumberOnClock(hour);
 	  sec++;
-	  if(sec >= 12){
+	  if(sec >= 60){
 		  sec = 0;
 		  min++;
 	  }
-	  if(min >= 12){
+	  if(min >= 60){
 		  min = 0;
 		  hour++;
 	  }
@@ -220,7 +220,7 @@ int main(void)
 	  setNumberOnClock(min);
 	  setNumberOnClock(hour);
 
-	  HAL_Delay(100);
+	  HAL_Delay(1000);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
