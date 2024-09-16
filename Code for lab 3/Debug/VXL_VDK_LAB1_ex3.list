@@ -517,9 +517,9 @@ int main(void)
  8000454:	687b      	ldr	r3, [r7, #4]
  8000456:	3301      	adds	r3, #1
  8000458:	607b      	str	r3, [r7, #4]
-	  if(sec >= 60){
+	  if(sec >= 12){
  800045a:	687b      	ldr	r3, [r7, #4]
- 800045c:	2b3b      	cmp	r3, #59	; 0x3b
+ 800045c:	2b0b      	cmp	r3, #11
  800045e:	dd04      	ble.n	800046a <main+0x4a>
 		  sec = 0;
  8000460:	2300      	movs	r3, #0
@@ -529,9 +529,9 @@ int main(void)
  8000466:	3301      	adds	r3, #1
  8000468:	60bb      	str	r3, [r7, #8]
 	  }
-	  if(min >= 60){
+	  if(min >= 12){
  800046a:	68bb      	ldr	r3, [r7, #8]
- 800046c:	2b3b      	cmp	r3, #59	; 0x3b
+ 800046c:	2b0b      	cmp	r3, #11
  800046e:	dd04      	ble.n	800047a <main+0x5a>
 		  min = 0;
  8000470:	2300      	movs	r3, #0
@@ -560,8 +560,8 @@ int main(void)
  8000490:	68f8      	ldr	r0, [r7, #12]
  8000492:	f7ff ff35 	bl	8000300 <setNumberOnClock>
 
-	  HAL_Delay(1000);
- 8000496:	f44f 707a 	mov.w	r0, #1000	; 0x3e8
+	  HAL_Delay(500);
+ 8000496:	f44f 70fa 	mov.w	r0, #500	; 0x1f4
  800049a:	f000 f95f 	bl	800075c <HAL_Delay>
 	  clearNumberOnClock(sec);
  800049e:	e7d0      	b.n	8000442 <main+0x22>
