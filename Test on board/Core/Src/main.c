@@ -23,6 +23,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "software_timer.h"
+#include "button.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -98,14 +99,17 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-
+setTimer(0, 1000);
   while (1)
   {
 		  if(isTimerExpired(0) == 1){
 			  setTimer(0, 1000);
 			  HAL_GPIO_TogglePin(Led_red_GPIO_Port, Led_red_Pin);
 		  }
-
+		  if(button1_flag == 1){
+			  button1_flag = 0;
+			  HAL_GPIO_TogglePin(Led_red_GPIO_Port, Led_red_Pin);
+		  }
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -276,8 +280,7 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
-void HAL_TIM_PeriodElapsedCallback ( TIM_HandleTypeDef * htim )
-{
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
 	timerRun();
 }
 /* USER CODE END 4 */
