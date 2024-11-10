@@ -12,9 +12,9 @@ int button_long_pressed[NUM_OF_BUTTON] = {0};
 int button_flag[NUM_OF_BUTTON] = {0};
 
 void readKey(){
-	Key[1] = HAL_GPIO_ReadPin(Button1_GPIO_Port, Button1_Pin);//mode
-	Key[2] = HAL_GPIO_ReadPin(Button2_GPIO_Port, Button2_Pin);//setting time
-	Key[3] = HAL_GPIO_ReadPin(Button3_GPIO_Port, Button3_Pin);//enter
+	//Key[1] = HAL_GPIO_ReadPin(Button1_GPIO_Port, Button1_Pin);//mode
+	//Key[2] = HAL_GPIO_ReadPin(Button2_GPIO_Port, Button2_Pin);//setting time
+	//Key[3] = HAL_GPIO_ReadPin(Button3_GPIO_Port, Button3_Pin);//enter
 }
 int isButtonPressed(int index){
 	if(button_flag[index] == 1){

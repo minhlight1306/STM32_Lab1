@@ -57,7 +57,7 @@
 #define RS 0x01
 
 /* Device I2C Address */
-#define DEVICE_ADDR     (0x27 << 1)
+#define DEVICE_ADDR     (0x21 << 1)
 
 void HD44780_Init(uint8_t rows);
 void HD44780_Clear();
@@ -89,3 +89,22 @@ void HD44780_PrintStr(const char[]);
 
 
 #endif /* INC_LIQUIDCRYSTAL_I2C_H_ */
+
+
+/**
+Edit by modify: Ngoc Hang
+**/
+
+//#include "stm32f1xx_hal.h"
+//
+//void lcd_init (void);   // initialize lcd
+//
+//void lcd_send_cmd (char cmd);  // send command to the lcd
+//
+//void lcd_send_data (char data);  // send data to the lcd
+//
+//void lcd_send_string (char *str);  // send string to the lcd
+//
+//void lcd_clear_display (void);	//clear display lcd
+//
+//void lcd_goto_XY (int row, int col); //set proper location on screen
