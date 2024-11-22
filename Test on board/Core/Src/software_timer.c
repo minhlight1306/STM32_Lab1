@@ -5,7 +5,7 @@ int timerCounter[MAX_COUNTER];
 int timerFlag[MAX_COUNTER];
 
 void setTimer(int index, int counter){
-	timerCounter[index] = counter/10;
+	timerCounter[index] = counter/100;
 	timerFlag[index] = 0;
 }
 void timerRun(){

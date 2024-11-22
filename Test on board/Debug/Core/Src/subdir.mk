@@ -6,8 +6,13 @@
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
 ../Core/Src/button.c \
+../Core/Src/fsm_automatic.c \
+../Core/Src/fsm_manual.c \
+../Core/Src/global.c \
+../Core/Src/led_traffic.c \
 ../Core/Src/liquidcrystal_i2c.c \
 ../Core/Src/main.c \
+../Core/Src/scan7led.c \
 ../Core/Src/software_timer.c \
 ../Core/Src/stm32f1xx_hal_msp.c \
 ../Core/Src/stm32f1xx_it.c \
@@ -17,8 +22,13 @@ C_SRCS += \
 
 OBJS += \
 ./Core/Src/button.o \
+./Core/Src/fsm_automatic.o \
+./Core/Src/fsm_manual.o \
+./Core/Src/global.o \
+./Core/Src/led_traffic.o \
 ./Core/Src/liquidcrystal_i2c.o \
 ./Core/Src/main.o \
+./Core/Src/scan7led.o \
 ./Core/Src/software_timer.o \
 ./Core/Src/stm32f1xx_hal_msp.o \
 ./Core/Src/stm32f1xx_it.o \
@@ -28,8 +38,13 @@ OBJS += \
 
 C_DEPS += \
 ./Core/Src/button.d \
+./Core/Src/fsm_automatic.d \
+./Core/Src/fsm_manual.d \
+./Core/Src/global.d \
+./Core/Src/led_traffic.d \
 ./Core/Src/liquidcrystal_i2c.d \
 ./Core/Src/main.d \
+./Core/Src/scan7led.d \
 ./Core/Src/software_timer.d \
 ./Core/Src/stm32f1xx_hal_msp.d \
 ./Core/Src/stm32f1xx_it.d \

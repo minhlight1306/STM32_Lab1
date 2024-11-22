@@ -22,10 +22,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "software_timer.h"
-#include "button.h"
-#include "liquidcrystal_i2c.h"
-#include <stdio.h>
+#include "global.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -62,9 +59,12 @@ static void MX_I2C1_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-//void test_io(){
-//	HAL_GPIO_WritePin(D2_GPIO_Port, D2_Pin, HAL_GPIO_ReadPin(B0_GPIO_Port, B0_Pin));
-//}
+	void test_io(){
+		HAL_GPIO_WritePin(GPIOA, A1_Pin | A2_Pin, 0);
+		HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, HAL_GPIO_ReadPin(A1_GPIO_Port, A1_Pin));
+		HAL_GPIO_WritePin(LD1_GPIO_Port, LD1_Pin, HAL_GPIO_ReadPin(A2_GPIO_Port, A2_Pin));
+
+	}
 /* USER CODE END 0 */
 
 /**
@@ -100,67 +100,24 @@ int main(void)
   /* USER CODE BEGIN 2 */
   HAL_TIM_Base_Start_IT(&htim2);
 
-  HD44780_Init(2);
-    HD44780_Clear();
-    HD44780_SetCursor(0,0);
-    HD44780_PrintStr("HELLO");
-    HD44780_SetCursor(10,1);
-    HD44780_PrintStr("WORLD");
-    HAL_Delay(2000);
-
-    HD44780_Clear();
-    HD44780_SetCursor(0,0);
-    HD44780_PrintStr("HELLO");
-    HAL_Delay(2000);
-    HD44780_NoBacklight();
-    HAL_Delay(2000);
-    HD44780_Backlight();
-
-    HAL_Delay(2000);
-    HD44780_Cursor();
-    HAL_Delay(2000);
-    HD44780_Blink();
-    HAL_Delay(5000);
-    HD44780_NoBlink();
-    HAL_Delay(2000);
-    HD44780_NoCursor();
-    HAL_Delay(2000);
-
-    HD44780_NoDisplay();
-    HAL_Delay(2000);
-    HD44780_Display();
-
-    HD44780_Clear();
-    HD44780_SetCursor(0,0);
-    HD44780_PrintStr("Learning STM32 with LCD is fun :-)");
-    for(int x=0; x<40; x=x+1)
-    {
-      HD44780_ScrollDisplayLeft();  //HD44780_ScrollDisplayRight();
-      HAL_Delay(500);
-    }
-
-    char snum[5];
-    for ( int x = 1; x <= 200 ; x++ )
-    {
-      //itoa(x, snum, 10);
-      snprintf(snum, sizeof(snum), "%d", x);
-      HD44780_Clear();
-      HD44780_SetCursor(0,0);
-      HD44780_PrintStr(snum);
-      HAL_Delay (1000);
-    }
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-setTimer(0, 200);
+  lcd_init();
+  setTimer(0, 100);//time automatic
+  setTimer(1, 100);//lcd
+  //setTimer(2, 100);//count down
+  setTimer(4, 100);//toggle led0
   while (1)
   {
-		  if(isTimerExpired(0) == 1){
-			  setTimer(0, 500);
-			  HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
-			  //HAL_GPIO_TogglePin(LD1_GPIO_Port, LD1_Pin);
-		  }
+//	  test_io();
+	  fsm_automatic_run();
+	  fsm_manual_run();
+	  if(isTimerExpired(4)){
+		  HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
+		  setTimer(4, 500);
+	  }
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -300,8 +257,11 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOB_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOA, A1_Pin|LD2_Pin|D7_Pin|D8_Pin
-                          |D2_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOA, LD2_Pin|D7_Pin|D8_Pin|D2_Pin, GPIO_PIN_RESET);
+
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(GPIOB, D6_Pin|D3_Pin|D5_Pin|D4_Pin
+                          |D10_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOC, D9_Pin|LD1_Pin, GPIO_PIN_RESET);
@@ -312,13 +272,16 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_PULLUP;
   HAL_GPIO_Init(B1_GPIO_Port, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : A1_Pin LD2_Pin D7_Pin D8_Pin
-                           D2_Pin */
-  GPIO_InitStruct.Pin = A1_Pin|LD2_Pin|D7_Pin|D8_Pin
-                          |D2_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  /*Configure GPIO pin : A4_Pin */
+  GPIO_InitStruct.Pin = A4_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Pull = GPIO_PULLUP;
+  HAL_GPIO_Init(A4_GPIO_Port, &GPIO_InitStruct);
+
+  /*Configure GPIO pins : A1_Pin A2_Pin */
+  GPIO_InitStruct.Pin = A1_Pin|A2_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Pull = GPIO_PULLUP;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
   /*Configure GPIO pins : USART_TX_Pin USART_RX_Pin */
@@ -326,6 +289,28 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+
+  /*Configure GPIO pins : LD2_Pin D7_Pin D8_Pin D2_Pin */
+  GPIO_InitStruct.Pin = LD2_Pin|D7_Pin|D8_Pin|D2_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : A3_Pin */
+  GPIO_InitStruct.Pin = A3_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Pull = GPIO_PULLUP;
+  HAL_GPIO_Init(A3_GPIO_Port, &GPIO_InitStruct);
+
+  /*Configure GPIO pins : D6_Pin D3_Pin D5_Pin D4_Pin
+                           D10_Pin */
+  GPIO_InitStruct.Pin = D6_Pin|D3_Pin|D5_Pin|D4_Pin
+                          |D10_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
   /*Configure GPIO pins : D9_Pin LD1_Pin */
   GPIO_InitStruct.Pin = D9_Pin|LD1_Pin;
