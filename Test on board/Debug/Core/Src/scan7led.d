@@ -28,7 +28,7 @@ Core/Src/scan7led.o: ../Core/Src/scan7led.c ../Core/Inc/scan7led.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h \
  ../Core/Inc/fsm_automatic.h ../Core/Inc/fsm_manual.h \
  ../Core/Inc/scan7led.h ../Core/Inc/liquidcrystal_i2c.h \
- ../Core/Inc/global.h
+ ../Core/Inc/scheduler.h ../Core/Inc/global.h
 
 ../Core/Inc/scan7led.h:
 
@@ -99,5 +99,7 @@ Core/Src/scan7led.o: ../Core/Src/scan7led.c ../Core/Inc/scan7led.h \
 ../Core/Inc/scan7led.h:
 
 ../Core/Inc/liquidcrystal_i2c.h:
+
+../Core/Inc/scheduler.h:
 
 ../Core/Inc/global.h:
