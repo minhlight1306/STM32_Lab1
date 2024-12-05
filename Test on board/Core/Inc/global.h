@@ -28,6 +28,8 @@
 #include "main.h"
 #include "scan7led.h"
 #include "liquidcrystal_i2c.h"
+#include "scheduler.h"
+#include <string.h>
 #include <stdio.h>
 
 extern int status;

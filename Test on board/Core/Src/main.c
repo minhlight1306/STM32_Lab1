@@ -65,6 +65,9 @@ static void MX_I2C1_Init(void);
 		HAL_GPIO_WritePin(LD1_GPIO_Port, LD1_Pin, HAL_GPIO_ReadPin(A2_GPIO_Port, A2_Pin));
 
 	}
+	void ledBlinky(){
+		HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
+	}
 /* USER CODE END 0 */
 
 /**
@@ -83,7 +86,8 @@ int main(void)
   HAL_Init();
 
   /* USER CODE BEGIN Init */
-
+  lcd_init();
+  SCH_Init();
   /* USER CODE END Init */
 
   /* Configure the system clock */
@@ -104,20 +108,18 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  lcd_init();
-  setTimer(0, 100);//time automatic
-  setTimer(1, 100);//lcd
-  //setTimer(2, 100);//count down
-  setTimer(4, 100);//toggle led0
+//  setTimer(0, 100);//time automatic
+//  setTimer(1, 100);//lcd
+//  //setTimer(2, 100);//count down
+//  setTimer(4, 100);//toggle led0
+  SCH_Add_Task(getKeyInput, 10, 10, 10);
+  SCH_Add_Task(ledBlinky, 10, 500, 9);
+  SCH_Add_Task(fsm_automatic_run, 20, 1000, 1);
+
   while (1)
   {
-//	  test_io();
-	  fsm_automatic_run();
-	  fsm_manual_run();
-	  if(isTimerExpired(4)){
-		  HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
-		  setTimer(4, 500);
-	  }
+	  SCH_Dispatch_Tasks();
+
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -327,8 +329,7 @@ static void MX_GPIO_Init(void)
 
 /* USER CODE BEGIN 4 */
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
-	timerRun();
-	getKeyInput();
+	SCH_Update();
 }
 /* USER CODE END 4 */
 

@@ -1,0 +1,37 @@
+
+
+#ifndef INC_SCHEDULER_H_
+#define INC_SCHEDULER_H_
+
+#include "global.h"
+
+typedef struct{
+	void (*pTask) (void);
+	uint32_t Delay;
+	uint32_t Period;
+	uint8_t RunMe;
+
+	uint32_t TaskID;
+}sTasks;
+
+#define SCH_MAX_TASKS 20
+extern uint32_t numTask;
+
+// khoi tao mot mang task
+void SCH_Init(void);
+
+// them 1 task vao mang
+void SCH_Add_Task(void (*pFunction)(), uint32_t DELAY,
+						uint32_t PERIOD, uint32_t TaskID);
+
+// cap nhat trang thai co het thoi gian delay chua, neu co RunMe++
+void SCH_Update(void);
+
+// kiem tra task da thuc thi chua
+void SCH_Dispatch_Tasks(void);
+
+// xoa task tai vi tri index
+uint8_t SCH_Delete_Task(uint32_t id);
+void SCH_Delete(uint32_t TASK_INDEX);
+
+#endif /* INC_SCHEDULER_H_ */
