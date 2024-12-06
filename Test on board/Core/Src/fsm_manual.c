@@ -32,7 +32,7 @@ void toAutomatic(){
 //		setTimer(0, count[2] * 1000);
 		SCH_Delete_Task(2); // turn off manual mode
 		SCH_Delete_Task(3); // turn off toggle
-		SCH_Add_Task(fsm_automatic_run, 0, 1000, 1);
+		SCH_Add_Task(fsm_automatic_run, 2, 100, 1);
 }
 
 // gia su D3 high = red_on, D4 high = green_on, D3 va D4 high = yellow_on
@@ -88,7 +88,7 @@ void fsm_manual_run(){
 				temp_count[0]++;
 				if(temp_count[0] > 99)
 					temp_count[0] = 1;
-				//displayLCD(temp_count[0], -1, 2);
+				displayLCD(temp_count[0], -1, 2);
 			}
 
 			break;
@@ -107,7 +107,7 @@ void fsm_manual_run(){
 				temp_count[1]++;
 				if(temp_count[1] > 99)
 					temp_count[1] = 1;
-				//displayLCD(temp_count[1], -1, 3);
+				displayLCD(temp_count[1], -1, 3);
 			}
 
 			break;
@@ -123,6 +123,7 @@ void fsm_manual_run(){
 				temp_count[2]++;
 				if(temp_count[2] > 99)
 					temp_count[2] = 1;
+				displayLCD(temp_count[2], -1, 4);
 			}
 
 			break;

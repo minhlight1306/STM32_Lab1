@@ -11,7 +11,7 @@
 void counter(){
 		led_count[0]--;
 		led_count[1]--;
-		lcd_clear_display();
+//		lcd_clear_display();
 }
 
 void fsm_automatic_run(){
@@ -28,8 +28,8 @@ void fsm_automatic_run(){
 				clearAllLed();
 				lcd_clear_display();
 				//displayLCD(led_count[0], led_count[1], 2);
-				SCH_Add_Task(fsm_manual_run, 0, 500, 2);
-				SCH_Add_Task(toggleLed, 0, 500, 3);
+				SCH_Add_Task(fsm_manual_run, 2, 50, 2);
+				SCH_Add_Task(toggleLed, 1, 50, 3);
 				SCH_Delete_Task(1);
 			}
 			if(isButtonPressed(1)){}
@@ -47,8 +47,8 @@ void fsm_automatic_run(){
 				clearAllLed();
 				lcd_clear_display();
 				//displayLCD(led_count[0], led_count[1], 2);
-				SCH_Add_Task(fsm_manual_run, 0, 500, 2);
-				SCH_Add_Task(toggleLed, 0, 500, 3);
+				SCH_Add_Task(fsm_manual_run, 2, 50, 2);
+				SCH_Add_Task(toggleLed, 1, 50, 3);
 				SCH_Delete_Task(1);
 			}
 			if(isButtonPressed(1)){}
@@ -67,8 +67,8 @@ void fsm_automatic_run(){
 				clearAllLed();
 				lcd_clear_display();
 				//displayLCD(led_count[0], led_count[1], 2);
-				SCH_Add_Task(fsm_manual_run, 0, 500, 2);
-				SCH_Add_Task(toggleLed, 0, 500, 3);
+				SCH_Add_Task(fsm_manual_run, 2, 50, 2);
+				SCH_Add_Task(toggleLed, 1, 50, 3);
 				SCH_Delete_Task(1);
 			}
 			if(isButtonPressed(1)){}
@@ -86,8 +86,8 @@ void fsm_automatic_run(){
 				clearAllLed();
 				lcd_clear_display();
 				//displayLCD(led_count[0], led_count[1], 2);
-				SCH_Add_Task(fsm_manual_run, 0, 500, 2);
-				SCH_Add_Task(toggleLed, 0, 500, 3);
+				SCH_Add_Task(fsm_manual_run, 2, 50, 2);
+				SCH_Add_Task(toggleLed, 1, 50, 3);
 				SCH_Delete_Task(1);
 			}
 			if(isButtonPressed(1)){}

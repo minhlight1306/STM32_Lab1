@@ -86,8 +86,7 @@ int main(void)
   HAL_Init();
 
   /* USER CODE BEGIN Init */
-  lcd_init();
-  SCH_Init();
+
   /* USER CODE END Init */
 
   /* Configure the system clock */
@@ -102,6 +101,8 @@ int main(void)
   MX_TIM2_Init();
   MX_I2C1_Init();
   /* USER CODE BEGIN 2 */
+  lcd_init();
+    SCH_Init();
   HAL_TIM_Base_Start_IT(&htim2);
 
   /* USER CODE END 2 */
@@ -112,9 +113,9 @@ int main(void)
 //  setTimer(1, 100);//lcd
 //  //setTimer(2, 100);//count down
 //  setTimer(4, 100);//toggle led0
-  SCH_Add_Task(getKeyInput, 10, 10, 10);
-  SCH_Add_Task(ledBlinky, 10, 500, 9);
-  SCH_Add_Task(fsm_automatic_run, 20, 1000, 1);
+  SCH_Add_Task(getKeyInput, 1, 1, 10);
+  SCH_Add_Task(ledBlinky, 2, 50, 9);
+  SCH_Add_Task(fsm_automatic_run, 2, 100, 1);
 
   while (1)
   {
@@ -217,7 +218,7 @@ static void MX_TIM2_Init(void)
 
   /* USER CODE END TIM2_Init 1 */
   htim2.Instance = TIM2;
-  htim2.Init.Prescaler = 63999;
+  htim2.Init.Prescaler = 6399;
   htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
   htim2.Init.Period = 9;
   htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;

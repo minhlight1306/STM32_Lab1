@@ -12,6 +12,7 @@ void clearAllLed(){
 	HAL_GPIO_WritePin(GPIOA, D7_Pin | D8_Pin, 1);//pin A
 	HAL_GPIO_WritePin(GPIOB, D3_Pin | D4_Pin | D5_Pin | D6_Pin | D10_Pin, 0);//pin B
 	HAL_GPIO_WritePin(GPIOC, D9_Pin, 0);//pin C
+	HAL_Delay(10);
 }
 
 //automatic
