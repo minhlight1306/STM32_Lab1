@@ -77,6 +77,15 @@ void displayDigit(uint8_t digit) {
     HAL_GPIO_WritePin(SEG5_GPIO_Port, SEG5_Pin, (segDigits[digit] & 0x20) ? 1 : 0);
     HAL_GPIO_WritePin(SEG6_GPIO_Port, SEG6_Pin, (segDigits[digit] & 0x40) ? 1 : 0);
 }
+void displayDigit2(uint8_t digit) {
+    HAL_GPIO_WritePin(SEG7_GPIO_Port, SEG7_Pin, (segDigits[digit] & 0x01) ? 1 : 0);
+    HAL_GPIO_WritePin(SEG8_GPIO_Port, SEG8_Pin, (segDigits[digit] & 0x02) ? 1 : 0);
+    HAL_GPIO_WritePin(SEG9_GPIO_Port, SEG9_Pin, (segDigits[digit] & 0x04) ? 1 : 0);
+    HAL_GPIO_WritePin(SEG10_GPIO_Port, SEG10_Pin, (segDigits[digit] & 0x08) ? 1 : 0);
+    HAL_GPIO_WritePin(SEG11_GPIO_Port, SEG11_Pin, (segDigits[digit] & 0x10) ? 1 : 0);
+    HAL_GPIO_WritePin(SEG12_GPIO_Port, SEG12_Pin, (segDigits[digit] & 0x20) ? 1 : 0);
+    HAL_GPIO_WritePin(SEG13_GPIO_Port, SEG13_Pin, (segDigits[digit] & 0x40) ? 1 : 0);
+}
 /* USER CODE END 0 */
 
 /**
@@ -113,21 +122,101 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  int counter = 0;
+  uint8_t count = 1;
+  uint8_t count5s = 1;
+  //uint8_t counter = 0;
   while (1)
-   {
-	     if(counter >= 10) counter = 0;
-		  displayDigit(counter++);
+  {
+	  //led red trai va phai on
+	  if(count <= 5){
+		  displayDigit(5-count);
+		  HAL_GPIO_WritePin(LED2_GPIO_Port, LED2_Pin, 1);//red
+		  HAL_GPIO_WritePin(LED3_GPIO_Port, LED3_Pin, 0);//green
+		  HAL_GPIO_WritePin(LED4_GPIO_Port, LED4_Pin, 0);//yellow
 
-		  HAL_Delay(1000);
+		  HAL_GPIO_WritePin(LED8_GPIO_Port, LED8_Pin, 1);
+		  HAL_GPIO_WritePin(LED9_GPIO_Port, LED9_Pin, 0);
+		  HAL_GPIO_WritePin(LED10_GPIO_Port, LED10_Pin, 0);
+		  //led green tren va duoi on
+		  if(count5s <= 3){
+			  displayDigit2(3-count5s);
+			  HAL_GPIO_WritePin(LED5_GPIO_Port, LED5_Pin, 0);
+			  HAL_GPIO_WritePin(LED6_GPIO_Port, LED6_Pin, 1);
+			  HAL_GPIO_WritePin(LED7_GPIO_Port, LED7_Pin, 0);
+			  HAL_GPIO_WritePin(LED11_GPIO_Port, LED11_Pin, 0);
+			  HAL_GPIO_WritePin(LED12_GPIO_Port, LED12_Pin, 1);
+			  HAL_GPIO_WritePin(LED1_GPIO_Port, LED1_Pin, 0);
+			  count5s++;
+		  	  }
+		  //led yellow tren va duoi on
+		  else{
+			  displayDigit2(5-count5s);
+			  HAL_GPIO_WritePin(LED5_GPIO_Port, LED5_Pin, 0);
+			  HAL_GPIO_WritePin(LED6_GPIO_Port, LED6_Pin, 0);
+			  HAL_GPIO_WritePin(LED7_GPIO_Port, LED7_Pin, 1);
+			  HAL_GPIO_WritePin(LED11_GPIO_Port, LED11_Pin, 0);
+			  HAL_GPIO_WritePin(LED12_GPIO_Port, LED12_Pin, 0);
+			  HAL_GPIO_WritePin(LED1_GPIO_Port, LED1_Pin, 1);
+			  count5s++;
+		  	  }
+		  count++;
+	  }
+	  //led green trai va phai on
+	  else if(count <= 8){
+		  displayDigit(8-count);
+		  displayDigit2(count5s-2);
+		  HAL_GPIO_WritePin(LED2_GPIO_Port, LED2_Pin, 0);
+		  HAL_GPIO_WritePin(LED3_GPIO_Port, LED3_Pin, 1);
+		  HAL_GPIO_WritePin(LED4_GPIO_Port, LED4_Pin, 0);
 
+		  HAL_GPIO_WritePin(LED5_GPIO_Port, LED5_Pin, 1);
+		  HAL_GPIO_WritePin(LED6_GPIO_Port, LED6_Pin, 0);
+		  HAL_GPIO_WritePin(LED7_GPIO_Port, LED7_Pin, 0);
+
+		  HAL_GPIO_WritePin(LED8_GPIO_Port, LED8_Pin, 0);
+		  HAL_GPIO_WritePin(LED9_GPIO_Port, LED9_Pin, 1);
+		  HAL_GPIO_WritePin(LED10_GPIO_Port, LED10_Pin, 0);
+
+		  HAL_GPIO_WritePin(LED11_GPIO_Port, LED11_Pin, 1);
+		  HAL_GPIO_WritePin(LED12_GPIO_Port, LED12_Pin, 0);
+		  HAL_GPIO_WritePin(LED1_GPIO_Port, LED1_Pin, 0);
+		  count++;
+		  count5s--;
+	  }
+	  //led yellow trai va phai on
+	  else if(count <= 9){
+		  displayDigit(10-count);
+		  displayDigit2(count5s-2);
+		  HAL_GPIO_WritePin(LED2_GPIO_Port, LED2_Pin, 0);
+		  HAL_GPIO_WritePin(LED3_GPIO_Port, LED3_Pin, 0);
+		  HAL_GPIO_WritePin(LED4_GPIO_Port, LED4_Pin, 1);
+
+		  HAL_GPIO_WritePin(LED5_GPIO_Port, LED5_Pin, 1);
+		  HAL_GPIO_WritePin(LED6_GPIO_Port, LED6_Pin, 0);
+		  HAL_GPIO_WritePin(LED7_GPIO_Port, LED7_Pin, 0);
+
+		  HAL_GPIO_WritePin(LED8_GPIO_Port, LED8_Pin, 0);
+		  HAL_GPIO_WritePin(LED9_GPIO_Port, LED9_Pin, 0);
+		  HAL_GPIO_WritePin(LED10_GPIO_Port, LED10_Pin, 1);
+
+		  HAL_GPIO_WritePin(LED11_GPIO_Port, LED11_Pin, 1);
+		  HAL_GPIO_WritePin(LED12_GPIO_Port, LED12_Pin, 0);
+		  HAL_GPIO_WritePin(LED1_GPIO_Port, LED1_Pin, 0);
+		  count++;
+		  count5s--;
+	  }
+	  else{
+		  displayDigit(0);
+		  displayDigit2(0);
+		  count = 1;
+		  count5s = 1;
+	  }
+	  HAL_Delay(1000);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
   }
-  /* USER CODE END 3 */
 }
-
 /**
   * @brief System Clock Configuration
   * @retval None
