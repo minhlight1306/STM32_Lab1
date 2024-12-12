@@ -91,35 +91,43 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  int led_status = 1 ;
   int count = 0;
-  while (1)
-   {
-	  switch(led_status){
-	  case 1:
-			HAL_GPIO_WritePin ( LED11_GPIO_Port, LED11_Pin , 0) ;
-			HAL_GPIO_WritePin (LED1_GPIO_Port, LED1_Pin, 1) ;
-			count++;
-			if(count >= 2){
-				led_status = 0;
-				count = 0;
-			}
-
-  	 break;
-	  case 0:
-			HAL_GPIO_WritePin ( LED11_GPIO_Port, LED11_Pin , 1) ;
-			HAL_GPIO_WritePin (LED1_GPIO_Port, LED1_Pin, 0) ;
-			count++;
-			if(count >=2 ){
-				led_status = 1;
-				count = 0;
-			}
-
-		break;
-	  }
-  	  HAL_Delay (1000) ;
-
-    /* USER CODE END WHILE */
+     int led_status = 1;
+     while (1)
+     {
+   	  switch(led_status){
+   	  case 1:
+   		  HAL_GPIO_WritePin(LED11_GPIO_Port, LED11_Pin, 1);
+   		  HAL_GPIO_WritePin(LED12_GPIO_Port, LED12_Pin, 0);
+   		  HAL_GPIO_WritePin(LED1_GPIO_Port, LED1_Pin, 0);
+   		  count++;
+   		  if(count >=5){
+   			  count = 0;
+   			  led_status = 2;
+   		  }
+   		  break;
+   	  case 2:
+   		  HAL_GPIO_WritePin(LED11_GPIO_Port, LED11_Pin, 0);
+   		  HAL_GPIO_WritePin(LED12_GPIO_Port, LED12_Pin, 1);
+   		  HAL_GPIO_WritePin(LED1_GPIO_Port, LED1_Pin, 0);
+   		  count++;
+   		  if(count >= 3){
+   			  count = 0;
+   			  led_status = 3;
+   	  	  	  }
+   		  break;
+   	  case 3:
+   		  HAL_GPIO_WritePin(LED11_GPIO_Port, LED11_Pin, 0);
+   		  HAL_GPIO_WritePin(LED12_GPIO_Port, LED12_Pin, 0);
+   		  HAL_GPIO_WritePin(LED1_GPIO_Port, LED1_Pin, 1);
+   		  count++;
+   		  if(count >= 2){
+   			  count = 0;
+   			  led_status = 1;
+   		  	  }
+   	  }
+   	  HAL_Delay(1000);
+       /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
   }
