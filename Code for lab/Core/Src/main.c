@@ -54,7 +54,29 @@ static void MX_GPIO_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+const uint8_t segDigits[10] = {
+    0b01000000, // 0: Seg0, Seg1, Seg2, Seg3, Seg4, Seg5
+    0b01111001, // 1: Seg1, Seg2
+    0b00100100, // 2: Seg0, Seg1, Seg3, Seg4, Seg6
+    0b00110000, // 3: Seg0, Seg1, Seg2, Seg3, Seg6
+    0b00011001, // 4: Seg1, Seg2, Seg5, Seg6
+    0b00010010, // 5: Seg0, Seg2, Seg3, Seg5, Seg6
+    0b00000010, // 6: Seg0, Seg2, Seg3, Seg4, Seg5, Seg6
+    0b01111000, // 7: Seg0, Seg1, Seg2
+    0b00000000, // 8: Seg0, Seg1, Seg2, Seg3, Seg4, Seg5, Seg6
+    0b00010000  // 9: Seg0, Seg1, Seg2, Seg3, Seg5, Seg6
+};
 
+// ham thuc hien led 7 doan
+void displayDigit(uint8_t digit) {
+    HAL_GPIO_WritePin(SEG0_GPIO_Port, SEG0_Pin, (segDigits[digit] & 0x01) ? 1 : 0);
+    HAL_GPIO_WritePin(SEG1_GPIO_Port, SEG1_Pin, (segDigits[digit] & 0x02) ? 1 : 0);
+    HAL_GPIO_WritePin(SEG2_GPIO_Port, SEG2_Pin, (segDigits[digit] & 0x04) ? 1 : 0);
+    HAL_GPIO_WritePin(SEG3_GPIO_Port, SEG3_Pin, (segDigits[digit] & 0x08) ? 1 : 0);
+    HAL_GPIO_WritePin(SEG4_GPIO_Port, SEG4_Pin, (segDigits[digit] & 0x10) ? 1 : 0);
+    HAL_GPIO_WritePin(SEG5_GPIO_Port, SEG5_Pin, (segDigits[digit] & 0x20) ? 1 : 0);
+    HAL_GPIO_WritePin(SEG6_GPIO_Port, SEG6_Pin, (segDigits[digit] & 0x40) ? 1 : 0);
+}
 /* USER CODE END 0 */
 
 /**
@@ -91,33 +113,13 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  int led_status = 1 ;
-  int count = 0;
+  int counter = 0;
   while (1)
    {
-	  switch(led_status){
-	  case 1:
-			HAL_GPIO_WritePin ( LED11_GPIO_Port, LED11_Pin , 0) ;
-			HAL_GPIO_WritePin (LED1_GPIO_Port, LED1_Pin, 1) ;
-			count++;
-			if(count >= 2){
-				led_status = 0;
-				count = 0;
-			}
+	     if(counter >= 10) counter = 0;
+		  displayDigit(counter++);
 
-  	 break;
-	  case 0:
-			HAL_GPIO_WritePin ( LED11_GPIO_Port, LED11_Pin , 1) ;
-			HAL_GPIO_WritePin (LED1_GPIO_Port, LED1_Pin, 0) ;
-			count++;
-			if(count >=2 ){
-				led_status = 1;
-				count = 0;
-			}
-
-		break;
-	  }
-  	  HAL_Delay (1000) ;
+		  HAL_Delay(1000);
 
     /* USER CODE END WHILE */
 
