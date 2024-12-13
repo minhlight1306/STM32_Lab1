@@ -20,6 +20,7 @@ void fsm_automatic_run(){
 			status = AUTO_RED_GREEN;
 			//time automatic
 		case AUTO_RED_GREEN:
+			lcd_clear_display();
 			traffic_automatic();
 			displayLCD(led_count[0], led_count[1], 1);
 			counter();
@@ -39,6 +40,7 @@ void fsm_automatic_run(){
 			}
 			break;
 		case AUTO_RED_YELLOW:
+			lcd_clear_display();
 			traffic_automatic();
 			displayLCD(led_count[0], led_count[1], 1);
 			counter();
@@ -59,6 +61,7 @@ void fsm_automatic_run(){
 			}
 			break;
 		case AUTO_GREEN_RED:
+			lcd_clear_display();
 			traffic_automatic();
 			displayLCD(led_count[0], led_count[1], 1);
 			counter();
@@ -78,6 +81,7 @@ void fsm_automatic_run(){
 			}
 			break;
 		case AUTO_YELLOW_RED:
+			lcd_clear_display();
 			traffic_automatic();
 			displayLCD(led_count[0], led_count[1], 1);
 			counter();
